@@ -1,0 +1,42 @@
+@echo off
+title Quick Note Taker
+
+:: Create notes folder if missing
+if not exist "%~dp0notes" mkdir "%~dp0notes"
+
+:menu
+cls
+echo ================================
+echo        QUICK NOTE TAKER
+echo ================================
+echo 1. Add a new note
+echo 2. View all notes
+echo 3. Open notes folder
+echo 4. Exit
+echo ================================
+set /p choice=Select an option: 
+
+if "%choice%"=="1" goto add
+if "%choice%"=="2" goto view
+if "%choice%"=="3" start "" "%~dp0notes" & goto menu
+if "%choice%"=="4" exit
+goto menu
+
+:add
+cls
+set /p note=Type your note: 
+echo [%date% %time%] %note%>>"%~dp0notes\notes.txt"
+echo Note saved.
+pause
+goto menu
+
+:view
+cls
+if not exist "%~dp0notes\notes.txt" (
+    echo No notes yet.
+) else (
+    type "%~dp0notes\notes.txt"
+)
+echo.
+pause
+goto menu
